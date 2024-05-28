@@ -45,7 +45,15 @@ amount: The number of tokens to redeem.
 item: A string representing the item being redeemed.
 Usage: This function can be used to exchange tokens for rewards or services within a platform.
 
-5. transfer
+5. redeemedItems
+
+   Purpose: To check if the redeemed item has been successfully redeemed
+
+6. redeemItemCount
+
+    Purpose: To count the redeemed item
+
+7. transfer
 
 Purpose: Transfers tokens from the sender's account to a specified recipient.
 Parameters:
@@ -53,7 +61,7 @@ recipient: The address that will receive the tokens.
 amount: The number of tokens to transfer.
 Usage: This function is used to send tokens from one user to another.
 
-6. transferFrom
+8. transferFrom
 
 Purpose: Allows a spender to transfer tokens from one account to another, provided the spender has been approved to do so.
 Parameters:
