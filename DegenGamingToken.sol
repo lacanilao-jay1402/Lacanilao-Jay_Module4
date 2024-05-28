@@ -6,7 +6,6 @@ import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 contract DegenGamingToken is ERC20 {
     address public owner;
 
-    
     // Event to log ownership transfer
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
 
@@ -16,8 +15,11 @@ contract DegenGamingToken is ERC20 {
         _;
     }
 
-    // Constructors to initialize the contract with the name and symbol of the token and set the owner
-    constructo ERC20("Degen Gaming", "DGM") {
+    // Mapping to store redeemed items for each user
+    mapping(address => string[]) private redeemedItems;
+
+    // Constructor to initialize the contract with the name and symbol of the token and set the owner
+    constructor() ERC20("Degen Gaming", "DGM") {
         owner = msg.sender;
         emit OwnershipTransferred(address(0), owner);
     }
@@ -35,7 +37,9 @@ contract DegenGamingToken is ERC20 {
     // Function to redeem tokens for in-game items, burns the tokens
     function redeem(uint256 amount, string memory item) public {
         require(balanceOf(msg.sender) >= amount, "Insufficient balance");
-        _burn(msg.sender, amount, item);
+        _burn(msg.sender, amount);
+        redeemedItems[msg.sender].push(item);
+        emit Redeem(msg.sender, amount, item);
     }
 
     // Event to log redemption of tokens for items
@@ -48,6 +52,16 @@ contract DegenGamingToken is ERC20 {
         owner = newOwner;
     }
 
+    // Function to get the count of redeemed items for a user
+    function getRedeemedItemCount(address user) public view returns (uint256) {
+        return redeemedItems[user].length;
+    }
+
+    // Function to get a redeemed item by index for a user
+    function getRedeemedItem(address user, uint256 index) public view returns (string memory) {
+        require(index < redeemedItems[user].length, "Index out of bounds");
+        return redeemedItems[user][index];
+    }
 }
 
     
